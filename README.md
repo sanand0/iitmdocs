@@ -374,7 +374,7 @@ The frontend requires both API keys because:
 Host `qa-interface.html` on your site and embed it using:
 
 ```html
-<iframe src="qa-interface.html" width="250" height="400" style="border:0" title="IITM Q&A"></iframe>
+<iframe src="qa-interface.html" width="400" height="400" style="border:0" title="IITM Q&A"></iframe>
 ```
 
 See `index.html` for a live example and additional guidance.
