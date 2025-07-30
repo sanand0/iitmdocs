@@ -12,9 +12,6 @@
 <body class="d-flex flex-column vh-100 p-2 small">
   <h6 class="text-center mb-2 flex-shrink-0">IITM BS Admissions</h6>
   <div id="chat-area" class="flex-grow-1 overflow-auto mb-2"></div>
-  <div id="loading" class="text-center my-2 d-none flex-shrink-0">
-    <div class="spinner-border spinner-border-sm text-primary"></div>
-  </div>
   <div class="input-group flex-shrink-0">
     <input id="question-input" type="text" class="form-control" placeholder="Ask a question" onkeypress="handleKeyPress(event)">
     <button id="ask-button" class="btn btn-primary" onclick="askQuestion()">Ask</button>
@@ -30,7 +27,6 @@
     const chatArea = document.getElementById('chat-area')
     const askButton = document.getElementById('ask-button')
     const questionInput = document.getElementById('question-input')
-    const loading = document.getElementById('loading')
     let entryId = 0
     let autoScroll = true
     chatArea.addEventListener('scroll', () => {
@@ -61,10 +57,8 @@
       entryId += 1
       chatArea.insertAdjacentHTML('beforeend', `
         <div class="mb-2" id="entry-${entryId}">
-          <div class="fw-bold">You:</div>
-          <div class="ms-3 mb-1">${escapeHtml(q)}</div>
-          <div class="fw-bold">Bot:</div>
-          <div class="ms-3 mb-1" id="answer-${entryId}"></div>
+          <div class="bg-light border rounded p-2 mb-1">${escapeHtml(q)}</div>
+          <div class="mb-1" id="answer-${entryId}"></div>
           <details class="mt-2 p-2 border rounded bg-light d-none" id="docs-${entryId}">
             <summary>Source documents</summary>
             <ul class="list-unstyled ms-3 mb-0"></ul>
@@ -85,7 +79,7 @@
       if (!q) return
       questionInput.value = ''
       askButton.disabled = true
-      loading.classList.remove('d-none')
+      askButton.innerHTML = '<span class="spinner-border spinner-border-sm"></span>'
       const {
         ans,
         docs,
@@ -126,7 +120,7 @@
         ans.innerHTML = `<div class="alert alert-danger">${err.message}</div>`
       } finally {
         askButton.disabled = false
-        loading.classList.add('d-none')
+        askButton.innerHTML = 'Ask'
         maybeScroll()
       }
     }
